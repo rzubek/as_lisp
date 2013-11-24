@@ -135,3 +135,63 @@ Built-in primitives are very bare bones (for now):
 
 
 
+#####  COMPILATION EXAMPLES
+
+```
+inputs:  (+ 1 2)
+parsed:  (core:+ 1 2)
+  ARGS  0
+  CONST 1
+  CONST 2
+  GVAR  core:+
+  CALLJ 2
+
+inputs:  (begin (+ (+ 1 2) 3) 4)
+parsed:  (begin (core:+ (core:+ 1 2) 3) 4)
+  ARGS  0
+  SAVE  "K0"  11
+  SAVE  "K1"  7
+  CONST 1
+  CONST 2
+  GVAR  core:+
+  CALLJ 2
+LABEL "K1"
+  CONST 3
+  GVAR  core:+
+  CALLJ 2
+LABEL "K0"
+  POP
+  CONST 4
+  RETURN
+
+inputs:  ((lambda (a) a) 5)
+parsed:  ((lambda (a) a) 5)
+  ARGS  0
+  CONST 5
+  FN  [Closure] ; (a)
+    ARGS  1
+    LVAR  0 0 ; a
+    RETURN
+  CALLJ 1
+
+inputs:  (begin (set! incf (lambda (x) (+ x 1))) (incf (incf 5)))
+parsed:  (begin (set! foo:incf (lambda (foo:x) (core:+ foo:x 1))) (foo:incf (foo:incf 5)))
+  ARGS  0
+  FN  [Closure] ; ((core:+ foo:x 1))
+    ARGS  1
+    LVAR  0 0 ; foo:x
+    CONST 1
+    GVAR  core:+
+    CALLJ 2
+  GSET  foo:incf
+  POP
+  SAVE  "K0"  8
+  CONST 5
+  GVAR  foo:incf
+  CALLJ 1
+LABEL "K0"
+  GVAR  foo:incf
+  CALLJ 1
+```
+
+
