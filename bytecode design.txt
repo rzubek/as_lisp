@@ -10,7 +10,8 @@ nargs   argument count, used when calling functions
 
 OPCODES
 
-Internally, opcodes are not raw bytes - they're structs that hold a type, and arguments in a form that's already processed (e.g. lists are lists, and not serialized byte arrays)
+Internally, opcodes are not raw bytes - they're structs that hold a type, and arguments
+in a form that's already processed (e.g. lists are lists, and not serialized byte arrays)
 
 LABEL   n       label for jumps, only gets used during compilation
 CONST   x       push x onto the stack
@@ -34,7 +35,8 @@ PRIM    name    performs a function call right off the stack, and stores return 
 
 INTEROP CONVENTIONS
 
-We adopt the Scheme notion of true/false values being different from nil, which is used mainly as a list terminator. This maps cleanly to AS semantics.
+We adopt the Scheme notion of true/false values being different from nil, 
+which is used mainly as a list terminator. This maps cleanly to AS semantics.
 
 AS FORM		AS_LISP FORM
 null		nil
